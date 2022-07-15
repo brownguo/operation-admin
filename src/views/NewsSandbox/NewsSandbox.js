@@ -6,10 +6,11 @@ import Home from "./home/Home";
 import NoPermission from "./nopermission/NoPermission";
 import UserManage from "./user-manage/UserManage";
 import RightManage from "./right-manage/RightManage";
+import {Layout} from "antd";
 
 function NewsSandbox() {
     return (
-        <div>
+        <Layout>
             <TopHeader></TopHeader>
             <SideMenu></SideMenu>
             <Switch>
@@ -19,7 +20,7 @@ function NewsSandbox() {
                 <Redirect from="/" to="/home" exact></Redirect>
                 <Route path="*" component={NoPermission}></Route>
             </Switch>
-        </div>
+        </Layout>
     );
 }
 
