@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-
+import {useEffect} from "react";
+import axios from "axios";
+import IndexRouter from "./router/IndexRouter";
 function App() {
+    useEffect(()=>{
+        console.log("done")
+        // axios({
+        //     url:"/gateway?cityId=110100&ticketFlag=1&k=7406159",
+        //     method:"get",
+        //     headers:{
+        //         'X-Client-Info': '{"a":"3000","ch":"1002","v":"5.0.4","e":"16395416565231270166529","bc":"110100"}',
+        //         'X-Host': 'mall.film-ticket.cinema.list'
+        //     }
+        // }).then((res)=>{
+        //     console.log(res.data.data.cinemas)
+        // }).catch((err)=>{
+        //     console.log(err)
+        // })
+    },[])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+        <IndexRouter></IndexRouter>
     </div>
   );
 }
