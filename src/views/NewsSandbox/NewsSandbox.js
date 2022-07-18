@@ -6,20 +6,35 @@ import Home from "./home/Home";
 import NoPermission from "./nopermission/NoPermission";
 import UserManage from "./user-manage/UserManage";
 import RightManage from "./right-manage/RightManage";
+import "./NewsSandbox.css"
 import {Layout} from "antd";
+const {Content, Footer} = Layout;
 
 function NewsSandbox() {
     return (
         <Layout>
-            <TopHeader></TopHeader>
             <SideMenu></SideMenu>
-            <Switch>
-                <Route path="/home" component={Home} exact></Route>
-                <Route path="/user-manage" component={UserManage} exact></Route>
-                <Route path="/right-manage" component={RightManage} exact></Route>
-                <Redirect from="/" to="/home" exact></Redirect>
-                <Route path="*" component={NoPermission}></Route>
-            </Switch>
+            <Layout className="site-layout">
+                <TopHeader></TopHeader>
+                <Content
+                    className="site-layout-background"
+                    style={{
+                        margin: '24px 16px',
+                        padding: 24,
+                        minHeight: 280,
+                    }}
+                >
+                    <Switch>
+                        <Route path="/home" component={Home} exact></Route>
+                        <Route path="/user-manage" component={UserManage} exact></Route>
+                        <Route path="/right-manage" component={RightManage} exact></Route>
+                        <Redirect from="/" to="/home" exact></Redirect>
+                        <Route path="*" component={NoPermission}></Route>
+                    </Switch>
+                    Content
+                </Content>
+                <Footer style={{ textAlign: 'center' }}>Created by brown!</Footer>
+            </Layout>
         </Layout>
     );
 }
