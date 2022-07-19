@@ -1,6 +1,7 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Layout, Menu } from 'antd';
 import { withRouter } from 'react-router-dom'
+import axios from "axios";
 import {
     UserOutlined,
     VideoCameraOutlined,
@@ -10,47 +11,15 @@ import "./sidemenu.css"
 
 const { Sider } = Layout;
 
-const menuList = [
-    {
-        key: '/user-manage',
-        icon: <UserOutlined />,
-        label: '用户管理',
-        children: [
-            {
-                key: '/user-mange/list',
-                icon: <UploadOutlined />,
-                label: '用户列表',
-            }
-        ]
-    },
-    {
-        key: '/product-manage',
-        icon: <VideoCameraOutlined />,
-        label: '产品管理',
-        children: [
-            {
-                key: '/product-manage/list',
-                icon: <UploadOutlined />,
-                label: '产品列表',
-            }
-        ]
-    },
-    {
-        key: '/role-manage',
-        icon: <UploadOutlined />,
-        label: '权限管理',
-        children: [
-            {
-                key: '/role-manage/list',
-                icon: <UploadOutlined />,
-                label: '权限列表',
-            }
-        ]
-    }
-]
-
 function SideMenu(props) {
     const [collapsed] = useState(false);
+    const [menuList, setMenuList] = useState([])
+    useEffect(()=>{
+        axios.get("http://localhost:5000/rights?_embed=children").then((res)=>{
+            console.log(res.data)
+            setMenuList(res.data)
+        })
+    }, [])
     return (
         <Sider trigger={null}  collapsible collapsed={collapsed}>
             <div className="logo"> TestTest</div>
