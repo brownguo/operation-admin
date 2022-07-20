@@ -50,8 +50,13 @@ function RightManageList(props) {
         setVisible(true);
     };
 
+    const hideModal = () => {
+        setVisible(false)
+    }
+
     const deleteMethod = ()=>{
-        console.log(itemlInfo)
+        setDataSource(dataSource.filter(data => data.id !== itemlInfo.id))
+        hideModal()
     }
     return (
         <div>
@@ -62,7 +67,7 @@ function RightManageList(props) {
                     deleteMethod()
                 }}
                 onCancel={()=>{
-                    setVisible(false);
+                    hideModal()
                 }}
             >
                 <p>{itemlInfo.id} - {itemlInfo.key} - {itemlInfo.label}</p>
