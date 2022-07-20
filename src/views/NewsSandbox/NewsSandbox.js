@@ -8,6 +8,8 @@ import UserManage from "./user-manage/UserManage";
 import RightManage from "./right-manage/RightManage";
 import "./NewsSandbox.css"
 import {Layout} from "antd";
+import RightManageList from "./right-manage/RightManageList";
+import RightRoleList from "./right-manage/RightRoleList";
 const {Content, Footer} = Layout;
 
 function NewsSandbox() {
@@ -27,11 +29,12 @@ function NewsSandbox() {
                     <Switch>
                         <Route path="/home" component={Home} exact></Route>
                         <Route path="/user-manage" component={UserManage} exact></Route>
-                        <Route path="/right-manage" component={RightManage} exact></Route>
+                        {/*<Route path="/right-manage" component={RightManage} exact></Route>*/}
+                        <Route path="/right-manage/right/list" component={RightManageList} exact></Route>
+                        <Route path="/right-manage/role/list" component={RightRoleList} exact></Route>
                         <Redirect from="/" to="/home" exact></Redirect>
                         <Route path="*" component={NoPermission}></Route>
                     </Switch>
-                    Content
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>Created by brown!</Footer>
             </Layout>

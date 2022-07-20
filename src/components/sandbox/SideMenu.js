@@ -16,17 +16,32 @@ function SideMenu(props) {
     const [menuList, setMenuList] = useState([])
     useEffect(()=>{
         axios.get("http://localhost:5000/rights?_embed=children").then((res)=>{
-            console.log(res.data)
-            setMenuList(res.data)
+            let menu_data = res.data
+            const menu_list = menu_data.map((item)=>{
+                if(item['children'].length > 0){
+                    for(let idx in item['children']){
+                        if(item['children'][idx]['pagepermisson'] !== 1){
+                            delete item['children'][idx]
+                        }
+                    }
+                }else{
+                    delete item['children']
+                }
+                return item
+            })
+            setMenuList(menu_list)
         })
     }, [])
+    const selectKey = props.location.pathname
+    const openKey = ["/"+selectKey.split("/")[1]]
     return (
         <Sider trigger={null}  collapsible collapsed={collapsed}>
             <div className="logo"> TestTest</div>
             <Menu
                 theme="dark"
                 mode="inline"
-                defaultSelectedKeys={['user-manage']}
+                defaultOpenKeys={openKey}
+                selectedKeys={selectKey}
                 items={menuList}
                 onClick={(current)=>{
                     props.history.push(current.key)
