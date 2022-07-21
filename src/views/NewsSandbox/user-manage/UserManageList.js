@@ -17,7 +17,7 @@ const sights = {
     Shanghai: ['Oriental Pearl', 'The Bund'],
 };
 
-const RightRoleList = () => {
+const UserManageList = () => {
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
@@ -117,4 +117,4 @@ const RightRoleList = () => {
     );
 };
 
-export default RightRoleList;
+export default UserManageList;

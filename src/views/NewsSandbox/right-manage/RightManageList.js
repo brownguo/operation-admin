@@ -39,7 +39,13 @@ function RightManageList(props) {
 
     useEffect(()=>{
         axios.get("http://localhost:5000/rights?_embed=children").then((res)=>{
-            setDataSource(res.data)
+            const data = res.data.map((item,idx)=>{
+                if(item['children'].length > 0){
+                    console.log(Object.keys(item['children'][idx][2]).toLowerCase())
+                }
+                return item
+            })
+            setDataSource(data)
         })
     }, [])
 
@@ -55,7 +61,9 @@ function RightManageList(props) {
     }
 
     const deleteMethod = ()=>{
-        setDataSource(dataSource.filter(data => data.id !== itemlInfo.id))
+        setDataSource(dataSource.filter((data)=>{
+            return data.id !== itemlInfo.id
+        }))
         hideModal()
     }
     return (

@@ -10,6 +10,7 @@ import "./NewsSandbox.css"
 import {Layout} from "antd";
 import RightManageList from "./right-manage/RightManageList";
 import RightRoleList from "./right-manage/RightRoleList";
+import UserManageList from "./user-manage/UserManageList";
 const {Content, Footer} = Layout;
 
 function NewsSandbox() {
@@ -29,6 +30,7 @@ function NewsSandbox() {
                     <Switch>
                         <Route path="/home" component={Home} exact></Route>
                         <Route path="/user-manage" component={UserManage} exact></Route>
+                        <Route path="/user-manage/list" component={UserManageList} exact></Route>
                         {/*<Route path="/right-manage" component={RightManage} exact></Route>*/}
                         <Route path="/right-manage/right/list" component={RightManageList} exact></Route>
                         <Route path="/right-manage/role/list" component={RightRoleList} exact></Route>
