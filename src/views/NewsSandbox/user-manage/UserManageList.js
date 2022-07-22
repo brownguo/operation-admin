@@ -1,120 +1,104 @@
-import React from 'react';
-import { Button, Form, Input, Select, Space } from 'antd';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-const { Option } = Select;
-const areas = [
-    {
-        label: 'Beijing',
-        value: 'Beijing',
-    },
-    {
-        label: 'Shanghai',
-        value: 'Shanghai',
-    },
-];
-const sights = {
-    Beijing: ['Tiananmen', 'Great Wall'],
-    Shanghai: ['Oriental Pearl', 'The Bund'],
-};
+import React, {useEffect, useState} from 'react';
+import {Button, Tag, Table, Modal} from "antd";
+import axios from "axios";
+import UserCreateForm from "../right-manage/CreateUserModal";
 
-const UserManageList = () => {
-    const [form] = Form.useForm();
+function UserManageList(props) {
+    const [dataSource, setDataSource] = useState([])
+    const columns = [
+        {
+            title: 'id',
+            dataIndex: 'id',
+        },
+        {
+            title: '用户名',
+            dataIndex: 'username',
+        },
+        {
+            title: 'region',
+            dataIndex: 'region',
+        },
+        {
+            title: 'roleState',
+            dataIndex: 'id',
+            render:(key)=>{
+                return <Tag color="green">{key}</Tag>
+            }
+        },
+        {
+            title: '操作',
+            render:(item)=>{
+                return (
+                    <div>
+                        <Button color="green" shape="round" type="primary">用户</Button>
+                        <Button color="green" shape="round" type="danger" onClick={()=>{
+                            setItemInfo(item)
+                            showModal()
+                        }}>删除</Button>
+                    </div>
+                )
+            }
+        }
+    ];
 
-    const onFinish = (values) => {
-        console.log('Received values of form:', values);
+    useEffect(()=>{
+        axios.get("http://localhost:5000/users").then((res)=>{
+            setDataSource(res.data)
+        })
+    }, [])
+
+    const [visible, setVisible] = useState(false);
+    const [userVisible, setUserVisible] = useState(false)
+    const [itemlInfo, setItemInfo] = useState({});
+
+    const showModal = () => {
+        setVisible(true);
     };
 
-    const handleChange = () => {
-        form.setFieldsValue({
-            sights: [],
-        });
-    };
+    const hideModal = () => {
+        setVisible(false)
+    }
 
+    const deleteMethod = ()=>{
+        setDataSource(dataSource.filter((data)=>{
+            return data.id !== itemlInfo.id
+        }))
+        hideModal()
+    }
+    const addUser = ()=>{
+        setUserVisible(true)
+    }
+    const cancelUser = ()=>{
+        setUserVisible(false)
+    }
     return (
-        <Form form={form} name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off">
-            <Form.Item
-                name="area"
-                label="Area"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Missing area',
-                    },
-                ]}
+        <div>
+            <Modal
+                title="是否删除用户？"
+                visible={visible}
+                onOk={()=>{
+                    deleteMethod()
+                }}
+                onCancel={()=>{
+                    hideModal()
+                }}
             >
-                <Select options={areas} onChange={handleChange} />
-            </Form.Item>
-            <Form.List name="sights">
-                {(fields, { add, remove }) => (
-                    <>
-                        {fields.map((field) => (
-                            <Space key={field.key} align="baseline">
-                                <Form.Item
-                                    noStyle
-                                    shouldUpdate={(prevValues, curValues) =>
-                                        prevValues.area !== curValues.area || prevValues.sights !== curValues.sights
-                                    }
-                                >
-                                    {() => (
-                                        <Form.Item
-                                            {...field}
-                                            label="Sight"
-                                            name={[field.name, 'sight']}
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Missing sight',
-                                                },
-                                            ]}
-                                        >
-                                            <Select
-                                                disabled={!form.getFieldValue('area')}
-                                                style={{
-                                                    width: 130,
-                                                }}
-                                            >
-                                                {(sights[form.getFieldValue('area')] || []).map((item) => (
-                                                    <Option key={item} value={item}>
-                                                        {item}
-                                                    </Option>
-                                                ))}
-                                            </Select>
-                                        </Form.Item>
-                                    )}
-                                </Form.Item>
-                                <Form.Item
-                                    {...field}
-                                    label="Price"
-                                    name={[field.name, 'price']}
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Missing price',
-                                        },
-                                    ]}
-                                >
-                                    <Input />
-                                </Form.Item>
-
-                                <MinusCircleOutlined onClick={() => remove(field.name)} />
-                            </Space>
-                        ))}
-
-                        <Form.Item>
-                            <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                                Add sights
-                            </Button>
-                        </Form.Item>
-                    </>
-                )}
-            </Form.List>
-            <Form.Item>
-                <Button type="primary" htmlType="submit">
-                    Submit
-                </Button>
-            </Form.Item>
-        </Form>
+                <p>{itemlInfo.id} - {itemlInfo.label}</p>
+            </Modal>
+            <UserCreateForm visible={userVisible} cancelUser={cancelUser}></UserCreateForm>
+            <Button type="primary" onClick={()=>{
+                addUser(true)
+            }}>添加用户</Button>
+            <Table
+                dataSource={dataSource}
+                columns={columns}
+                pagination={{
+                    pageSize:10
+                }}
+                rowKey="id"
+            />
+        </div>
     );
-};
+}
 
 export default UserManageList;

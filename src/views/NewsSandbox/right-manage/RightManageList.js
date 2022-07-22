@@ -39,13 +39,21 @@ function RightManageList(props) {
 
     useEffect(()=>{
         axios.get("http://localhost:5000/rights?_embed=children").then((res)=>{
-            const data = res.data.map((item,idx)=>{
+            let data = res.data
+            const menu_list = data.map((item)=>{
                 if(item['children'].length > 0){
-                    console.log(Object.keys(item['children'][idx][2]).toLowerCase())
+                    for(let idx in item['children']){
+                        delete item['children'][idx]['rightId']
+                        if(item['children'][idx]['pagepermisson'] !== 1){
+                            delete item['children'][idx]
+                        }
+                    }
+                }else{
+                    delete item['children']
                 }
                 return item
             })
-            setDataSource(data)
+            setDataSource(menu_list)
         })
     }, [])
 

@@ -20,6 +20,7 @@ function SideMenu(props) {
             const menu_list = menu_data.map((item)=>{
                 if(item['children'].length > 0){
                     for(let idx in item['children']){
+                        delete item['children'][idx]['rightId']
                         if(item['children'][idx]['pagepermisson'] !== 1){
                             delete item['children'][idx]
                         }
