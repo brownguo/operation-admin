@@ -239,7 +239,7 @@
     },
     {
       "id": 16,
-      "label": "撰写新闻",
+      "label": "UDID填写",
       "rightId": 14,
       "key": "/news-manage/add",
       "grade": 2,
@@ -271,7 +271,7 @@
     },
     {
       "id": 20,
-      "label": "新闻分类",
+      "label": "UDID列表",
       "rightId": 14,
       "key": "/news-manage/category",
       "pagepermisson": 1,
@@ -342,14 +342,14 @@
     },
     {
       "id": 14,
-      "label": "新闻管理",
+      "label": "UDID管理",
       "key": "/news-manage",
       "pagepermisson": 1,
       "grade": 1
     },
     {
       "id": 21,
-      "label": "审核管理",
+      "label": "分布填写",
       "key": "/audit-manage",
       "pagepermisson": 1,
       "grade": 1
