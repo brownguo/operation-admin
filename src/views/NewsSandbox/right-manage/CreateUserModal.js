@@ -15,8 +15,7 @@ const UserCreateForm = (props) => {
             cancelText="取消"
             onCancel={cancelUser}
             onOk={() => {
-                form
-                    .validateFields()
+                form.validateFields()
                     .then((values) => {
                         form.resetFields();
                         onCreate(values);

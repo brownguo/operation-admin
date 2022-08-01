@@ -5,14 +5,17 @@ const steps = [
     {
         title: 'First',
         content: 'First-content',
+        description: "This is a description."
     },
     {
         title: 'Second',
         content: 'Second-content',
+        description: "This is a description."
     },
     {
         title: 'Last',
         content: 'Last-content',
+        description: "This is a description."
     },
 ];
 
@@ -29,24 +32,32 @@ function UdidManage(props) {
     return (
         <div>
             <PageHeader
+                className="site-page-header"
                 title="UDID Manage"
                 subTitle="分步表单"
             />
-            <Steps current={current}>
+            <Steps current={current} className="steps-header">
                 {steps.map((item) => (
-                    <Step key={item.title} title={item.title} />
+                    <Step key={item.title} title={item.title} description={item.description} />
                 ))}
             </Steps>
-            <div className="steps-content">{steps[current].content}</div>
+
+            <div className="steps-content">
+                {steps[current].content}
+            </div>
             <div className="steps-action">
                 {current < steps.length - 1 && (
                     <Button type="primary" onClick={() => next()}>
-                        Next
+                        下一步
                     </Button>
                 )}
                 {current === steps.length - 1 && (
-                    <Button type="primary" onClick={() => message.success('Processing complete!')}>
-                        Done
+                    <Button type="primary" onClick={() =>{
+                            message.info('done ! Processing complete!')
+                            message.success('done ! Processing complete!')
+                        }
+                    }>
+                        提交
                     </Button>
                 )}
                 {current > 0 && (
@@ -56,7 +67,7 @@ function UdidManage(props) {
                         }}
                         onClick={() => prev()}
                     >
-                        Previous
+                        上一步
                     </Button>
                 )}
             </div>
