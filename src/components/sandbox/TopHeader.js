@@ -1,4 +1,5 @@
 import React,{useState} from 'react'
+import {connect} from "react-redux";
 import { Layout, Dropdown, Menu, Space, Avatar } from 'antd';
 import {
     MenuUnfoldOutlined,
@@ -6,9 +7,11 @@ import {
     SmileOutlined,
     UserOutlined
 } from '@ant-design/icons';
+import {CollapsedReducer} from "../../redux/reducers/CollapsedReducer";
 const { Header } = Layout;
 
 function TopHeader(props) {
+    console.log(props)
     const [collapsed, setCollapsed] = useState(false)
     const menu = (
         <Menu
@@ -39,6 +42,7 @@ function TopHeader(props) {
             {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                 className: 'trigger',
                 onClick: ()=>{
+                    console.log("collapsed:", collapsed)
                     setCollapsed(!collapsed)
                 },
             })}
@@ -54,4 +58,14 @@ function TopHeader(props) {
     )
 }
 
-export default TopHeader
+const mapsStateToProps = (state)=>{
+   return {
+       is_collapsed_status: state.CollapsedReducer.isShow
+   }
+}
+
+const mapsDispatchToProps = ()=>{
+    
+}
+
+export default connect(mapsStateToProps)(TopHeader)
