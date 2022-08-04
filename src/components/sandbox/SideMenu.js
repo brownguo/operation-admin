@@ -2,17 +2,12 @@ import React, {useEffect, useState} from 'react'
 import { Layout, Menu } from 'antd';
 import { withRouter } from 'react-router-dom'
 import axios from "axios";
-import {
-    UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
-} from '@ant-design/icons';
 import "./sidemenu.css"
+import {connect} from "react-redux";
 
 const { Sider } = Layout;
 
 function SideMenu(props) {
-    const [collapsed] = useState(false);
     const [menuList, setMenuList] = useState([])
     useEffect(()=>{
         axios.get("http://localhost:5000/rights?_embed=children").then((res)=>{
@@ -36,7 +31,7 @@ function SideMenu(props) {
     const selectKey = props.location.pathname
     const openKey = ["/"+selectKey.split("/")[1]]
     return (
-        <Sider trigger={null}  collapsible collapsed={collapsed}>
+        <Sider trigger={null}  collapsible collapsed={props.is_collapsed_status}>
             <div className="logo"> TestTest</div>
             <Menu
                 theme="dark"
@@ -52,4 +47,10 @@ function SideMenu(props) {
     )
 }
 
-export default withRouter(SideMenu)
+const mapsStateToProps = (state)=>{
+    return {
+        is_collapsed_status: state.CollapsedReducer.is_collapsed_show,
+    }
+}
+
+export default connect(mapsStateToProps)(withRouter(SideMenu))

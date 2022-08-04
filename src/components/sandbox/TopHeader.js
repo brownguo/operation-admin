@@ -7,12 +7,12 @@ import {
     SmileOutlined,
     UserOutlined
 } from '@ant-design/icons';
-import {CollapsedReducer} from "../../redux/reducers/CollapsedReducer";
 const { Header } = Layout;
 
 function TopHeader(props) {
-    console.log(props)
-    const [collapsed, setCollapsed] = useState(false)
+    const changeCollapsed = ()=>{
+        props.changeCollapsed()
+    }
     const menu = (
         <Menu
             items={[
@@ -39,11 +39,10 @@ function TopHeader(props) {
                 padding: 0,
             }}
         >
-            {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+            {React.createElement(props.is_collapsed_status ? MenuUnfoldOutlined : MenuFoldOutlined, {
                 className: 'trigger',
                 onClick: ()=>{
-                    console.log("collapsed:", collapsed)
-                    setCollapsed(!collapsed)
+                    changeCollapsed()
                 },
             })}
             <div style={{float:"right"}}>
@@ -58,14 +57,20 @@ function TopHeader(props) {
     )
 }
 
+// 这个state是reducer里初始化的
 const mapsStateToProps = (state)=>{
    return {
-       is_collapsed_status: state.CollapsedReducer.isShow
+       is_collapsed_status: state.CollapsedReducer.is_collapsed_show,
    }
 }
 
-const mapsDispatchToProps = ()=>{
-    
+//dispatch是一个方法，返回的都是一个对象
+const mapsDispatchToProps = {
+    changeCollapsed(){
+        return {
+            type: "change_collapsed"
+        }
+    }
 }
 
-export default connect(mapsStateToProps)(TopHeader)
+export default connect(mapsStateToProps, mapsDispatchToProps)(TopHeader)

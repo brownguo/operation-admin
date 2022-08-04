@@ -1,7 +1,14 @@
 //在这里初始化一个reducer
 export const CollapsedReducer = (prevState={
-    isShow: false
+    is_collapsed_show: false
 }, action) =>{
-    console.log(action)
-    return prevState
+    let {type} = action
+    switch (type) {
+        case "change_collapsed":
+            let newState = {...prevState}
+            newState.is_collapsed_show = !newState.is_collapsed_show
+            return newState
+        default:
+            return prevState
+    }
 }
