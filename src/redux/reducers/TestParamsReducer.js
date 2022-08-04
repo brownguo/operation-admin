@@ -3,7 +3,6 @@ let initState = {
 }
 const TestParamsReducer = (prevState=initState, action)=>{
     let {type} = action
-    console.log("TestParams reducer: ", type)
     return prevState
 }
 
