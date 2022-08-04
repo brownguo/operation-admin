@@ -12,6 +12,7 @@ import RightManageList from "./right-manage/RightManageList";
 import RightRoleList from "./right-manage/RightRoleList";
 import UserManageList from "./user-manage/UserManageList";
 import UdidManage from "./udid-manage/UDIDManage";
+import { SyncOutlined } from '@ant-design/icons';
 import { Spin } from 'antd'
 import {connect} from "react-redux";
 
@@ -19,13 +20,21 @@ const {Content, Footer} = Layout;
 
 function NewsSandbox(props) {
     let {loading_status} = props
-    console.log(loading_status)
+    const antIcon = (
+        <SyncOutlined
+            style={{
+                fontSize: 36,
+            }}
+            spin
+        />
+    );
+
     return (
         <Layout>
             <SideMenu></SideMenu>
             <Layout className="site-layout">
                 <TopHeader></TopHeader>
-                <Spin size="large" spinning={loading_status}>
+                <Spin size="large" spinning={loading_status} indicator={antIcon}>
                     <Content
                         className="site-layout-background"
                         style={{
