@@ -3,7 +3,7 @@ import {CollapsedReducer} from "./reducers/CollapsedReducer";
 import TestParamsReducer from "./reducers/TestParamsReducer";
 import LoadingReducer from "./reducers/LoadingReducer";
 
-//这里可以合并多个reducer
+//引入并合并reducer
 const reducer = combineReducers({
     CollapsedReducer,TestParamsReducer, LoadingReducer
 })

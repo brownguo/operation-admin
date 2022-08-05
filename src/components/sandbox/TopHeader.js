@@ -1,6 +1,6 @@
-import React,{useState} from 'react'
+import React from 'react'
 import {connect} from "react-redux";
-import { Layout, Dropdown, Menu, Space, Avatar } from 'antd';
+import { Layout, Dropdown, Menu, Avatar } from 'antd';
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
@@ -10,7 +10,7 @@ import {
 const { Header } = Layout;
 
 function TopHeader(props) {
-    const changeCollapsed = ()=>{
+    const changeCollapsedStatus = ()=>{
         props.changeCollapsed()
     }
     const menu = (
@@ -42,7 +42,7 @@ function TopHeader(props) {
             {React.createElement(props.is_collapsed_status ? MenuUnfoldOutlined : MenuFoldOutlined, {
                 className: 'trigger',
                 onClick: ()=>{
-                    changeCollapsed()
+                    changeCollapsedStatus()
                 },
             })}
             <div style={{float:"right"}}>
@@ -57,7 +57,7 @@ function TopHeader(props) {
     )
 }
 
-// 这个state是reducer里初始化的
+// 这个state是reducer里初始化的，不需要再引入reducer了，用connect就能映入reducer里的state
 const mapsStateToProps = (state)=>{
    return {
        is_collapsed_status: state.CollapsedReducer.is_collapsed_show,

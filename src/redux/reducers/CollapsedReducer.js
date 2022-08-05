@@ -1,4 +1,4 @@
-//在这里初始化一个reducer
+//在这里初始化一个reducer，reducer处理数据，react会遍历所有reducer
 export const CollapsedReducer = (prevState={
     is_collapsed_show: false
 }, action) =>{
